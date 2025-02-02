@@ -10,4 +10,25 @@ index c86ccd726fb0bef6e82cd37a6d7c7fc9edef8344..0ec2bfe2463e998b5ad68b618f4d216f
 +const { Program, AnchorProvider, EventParser, BorshAccountsCoder, BorshInstructionCoder, BN, } = pkg;
  import * as fs from "fs";
  import * as path from "path";
- export const confirmTransaction = async (connection, signature, commitment = "confirmed") => {
+-export const confirmTransaction = async (connection, signature, commitment = "confirmed") => {
++export const confirmTransaction = async (connection, signature, commitment = "confirmed") => {
++    try {
++        const latestBlockhash = await connection.getLatestBlockhash();
++        const confirmation = await connection.confirmTransaction(
++            {
++                signature,
++                lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
++                blockhash: latestBlockhash.blockhash,
++            },
++            commitment
++        );
++
++        if (confirmation.value.err) {
++            throw new Error(getErrorFromRPCResponse(confirmation.value.err));
++        }
++
++        return confirmation;
++    } catch (error) {
++        throw new Error(`Failed to confirm transaction: ${error.message}`);
++    }
++};

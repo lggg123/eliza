@@ -45,6 +45,7 @@
   "pnpm": {
     "overrides": {
       "onnxruntime-node": "1.20.1",
+      "servify": "npm:servify@0.1.12",
       "@solana/web3.js@1.95.5": "npm:@solana/web3.js@1.95.5",
       "@solana/web3.js@1.95.8": "npm:@solana/web3.js@1.95.8",
       "@solana/web3.js@2": "npm:@solana/web3.js@2.0.0",
@@ -59,9 +60,6 @@
       "cookie": "0.7.0",
       "bs58": "5.0.0",
       "@coral-xyz/anchor": "0.28.0"
-    },
-    "patchedDependencies": {
-      "@solana-developers/helpers": "patches/@solana-developers__helpers.patch"
     }
   },
   "engines": {

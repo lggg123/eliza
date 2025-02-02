@@ -53,6 +53,7 @@ RUN pnpm run build --filter="./packages/core"
 RUN pnpm run build --filter="./packages/adapter-redis" && \
     pnpm run build --filter="./packages/adapter-mongodb" && \
     pnpm run build --filter="./packages/adapter-postgres" && \
+    pnpm run build --filter="./packages/adapter-pglite" && \
     pnpm run build --filter="./packages/adapter-sqlite" && \
     pnpm run build --filter="./packages/adapter-sqljs" && \
     pnpm run build --filter="./packages/adapter-qdrant" && \

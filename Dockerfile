@@ -34,11 +34,15 @@ RUN ln -sf /usr/bin/python3 /usr/bin/python
 # Set the working directory
 WORKDIR /app
 
-# Copy application code
-COPY . .
+# Copy package files and patches first
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY patches ./patches/
 
 # Install dependencies
 RUN pnpm install --no-frozen-lockfile
+
+# Copy remaining application code
+COPY . .
 
 # Build the project
 RUN pnpm run build && pnpm prune --prod
@@ -64,6 +68,7 @@ COPY --from=builder /app/package.json ./
 COPY --from=builder /app/pnpm-workspace.yaml ./
 COPY --from=builder /app/.npmrc ./
 COPY --from=builder /app/turbo.json ./
+COPY --from=builder /app/patches ./patches/
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/agent ./agent
 COPY --from=builder /app/client ./client
